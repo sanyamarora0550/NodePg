@@ -26,6 +26,18 @@ app.get('/get-all-users', async (req, res) => {
     }
 });
 
+app.get('/get-user/:user_id', async (req, res) => {
+    try {
+        req.body.user_id = req.params.user_id;
+        service.getUserById(req.body, (data) => {
+            res.send(data);
+        });
+    } catch (err) {
+        res.send({ succes: false });
+        console.error('Error in /get-user/:id', err);
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server Started....!!');
 });

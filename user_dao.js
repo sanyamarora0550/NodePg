@@ -10,7 +10,13 @@ let getAllUsers = () => {
     return db.query(query, []);
 }
 
+let getUserById = (user_id) => {
+    let query = 'SELECT * FROM public.user WHERE user_id = $1'
+    return db.query(query, [user_id]);
+}
+
 module.exports = {
     insertUser,
-    getAllUsers
+    getAllUsers,
+    getUserById
 }

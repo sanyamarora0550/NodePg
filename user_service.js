@@ -11,7 +11,15 @@ async function getAllUsers(reqBody, callback) {
     callback(res);
 }
 
+async function getUserById(reqBody, callback) {
+    console.log(reqBody);
+    let res = await dao.getUserById(reqBody.user_id);
+    res = res.rows ? res.rows : [];
+    callback(res);
+}
+
 module.exports = {
     insertUser,
-    getAllUsers
+    getAllUsers,
+    getUserById
 }
