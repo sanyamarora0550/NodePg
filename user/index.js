@@ -1,11 +1,19 @@
 const express = require('express'),
     service = require('./service'),
-    router = express.Router();
+    router = express.Router(),
+    { signAccessToken } = require('../auth/jwt-helper'),
+    { verifyToken } = require('../auth/jwt-helper');
 
 router.post('/create', async (req, res) => {
     try {
-        service.insertUser(req.body, (data) => {
-            res.send(data);
+        service.insertUser(req.body, async (data) => {
+            if (data.success) {
+                let token = await signAccessToken(req.body.user_name);
+                res.send({ token });
+            }
+            else {
+                res.send(data);
+            }
         });
     } catch (err) {
         res.send({ succes: false });
@@ -13,7 +21,7 @@ router.post('/create', async (req, res) => {
     }
 });
 
-router.get('/get-all-users', async (req, res) => {
+router.get('/get-all-users', verifyToken, async (req, res) => {
     try {
         service.getAllUsers(req.body, (data) => {
             res.send(data);
@@ -24,7 +32,7 @@ router.get('/get-all-users', async (req, res) => {
     }
 });
 
-router.get('/get-user/:user_id', async (req, res) => {
+router.get('/get-user/:user_id', verifyToken, async (req, res) => {
     try {
         req.body.user_id = req.params.user_id;
         service.getUserById(req.body, (data) => {
@@ -36,7 +44,7 @@ router.get('/get-user/:user_id', async (req, res) => {
     }
 });
 
-router.put('/update-password/:user_id', async (req, res) => {
+router.put('/update-password/:user_id', verifyToken, async (req, res) => {
     try {
         req.body.user_id = req.params.user_id;
         service.updatePassword(req.body, (data) => {
@@ -48,7 +56,7 @@ router.put('/update-password/:user_id', async (req, res) => {
     }
 });
 
-router.delete('/delete-user/:user_id', async (req, res) => {
+router.delete('/delete-user/:user_id', verifyToken, async (req, res) => {
     try {
         req.body.user_id = req.params.user_id;
         service.deleteUser(req.body, (data) => {
