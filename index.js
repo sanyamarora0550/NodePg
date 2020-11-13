@@ -62,6 +62,17 @@ app.delete('/delete-user/:user_id', async (req, res) => {
     }
 });
 
+app.post('/login', async (req, res) => {
+    try {
+        service.login(req.body, (data) => {
+            res.send(data);
+        });
+    } catch (err) {
+        res.send({ succes: false });
+        console.error('Error in /login', err);
+    }
+})
+
 app.listen(3000, () => {
     console.log('Server Started....!!');
 });

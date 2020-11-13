@@ -39,10 +39,32 @@ async function deleteUser(reqBody, callback) {
     callback({ success: true, msg: "Deleted!!" });
 }
 
+async function login(reqBody, callback) {
+    let user = await dao.getUserByUsername(reqBody.user_name);
+    user = user.rows ? user.rows : [];
+    if (user.length > 0) {
+        let userObj = user[0];
+        console.log(userObj);
+        if (!userObj.is_active) {
+            callback({ success: false, msg: "User not active!!!" });
+            return;
+        }
+        let isPasswordMatched = await bcrypt.compare(reqBody.password, userObj.password);
+        if (!isPasswordMatched) {
+            callback({ success: false, msg: "Invalid username or password!!" });
+            return;
+        }
+        callback({ success: true, msg: "LoggedIn!!!" });
+        return;
+    }
+    callback({ success: false, msg: "Invalid username or password!!" });
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
     updatePassword,
-    deleteUser
+    deleteUser,
+    login
 }
