@@ -44,7 +44,6 @@ async function login(reqBody, callback) {
     user = user.rows ? user.rows : [];
     if (user.length > 0) {
         let userObj = user[0];
-        console.log(userObj);
         if (!userObj.is_active) {
             callback({ success: false, msg: "User not active!!!" });
             return;
