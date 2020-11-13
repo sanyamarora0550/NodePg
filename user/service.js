@@ -64,6 +64,12 @@ async function createTask(reqBody, callback) {
     callback({ success: true, msg: "Created Task!!" });
 }
 
+async function getTasksOfUser(reqBody, callback) {
+    let tasks = await dao.getTasksOfUser(reqBody.user_id);
+    tasks = tasks.rows ? tasks.rows : [];
+    callback({ success: true, data: tasks });
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
@@ -71,5 +77,6 @@ module.exports = {
     updatePassword,
     deleteUser,
     login,
-    createTask
+    createTask,
+    getTasksOfUser
 }

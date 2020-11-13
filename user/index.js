@@ -90,10 +90,22 @@ router.post('/create-task/:user_id', verifyToken, async (req, res) => {
         req.body.user_id = req.params.user_id;
         service.createTask(req.body, (data) => {
             res.send(data);
-        })
+        });
     } catch (err) {
         res.send({ succes: false });
         console.error('Error in /create-task/:user_id', err);
+    }
+});
+
+router.get('/get-tasks/:user_id', verifyToken, async (req, res) => {
+    try {
+        req.body.user_id = req.params.user_id;
+        service.getTasksOfUser(req.body, (data) => {
+            res.send(data);
+        });
+    } catch (err) {
+        res.send({ succes: false });
+        console.error('Error in /get-tasks/:user_id', err);
     }
 });
 

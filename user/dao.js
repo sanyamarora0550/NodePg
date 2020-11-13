@@ -35,6 +35,11 @@ let createTask = (user_id, task_details) => {
     return db.query(query, [user_id, task_details]);
 }
 
+let getTasksOfUser = (user_id) => {
+    let query = 'SELECT task_details, is_pending from public.user_task WHERE user_id = $1';
+    return db.query(query, [user_id]);
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
@@ -42,5 +47,6 @@ module.exports = {
     updatePassword,
     getUserByUsername,
     deleteUser,
-    createTask
+    createTask,
+    getTasksOfUser
 }
