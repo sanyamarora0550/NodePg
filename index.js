@@ -48,7 +48,19 @@ app.put('/update-password/:user_id', async (req, res) => {
         res.send({ succes: false });
         console.error('Error in /update-password/:user_id', err);
     }
-})
+});
+
+app.delete('/delete-user/:user_id', async (req, res) => {
+    try {
+        req.body.user_id = req.params.user_id;
+        service.deleteUser(req.body, (data) => {
+            res.send(data);
+        });
+    } catch (err) {
+        res.send({ succes: false });
+        console.error('Error in /delete-user/:user_id', err);
+    }
+});
 
 app.listen(3000, () => {
     console.log('Server Started....!!');

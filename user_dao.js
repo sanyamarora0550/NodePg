@@ -25,10 +25,16 @@ let getUserByUsername = (user_name) => {
     return db.query(query, [user_name]);
 }
 
+let deleteUser = (user_id) => {
+    let query = 'UPDATE public.user SET is_active = false WHERE user_id = $1';
+    return db.query(query, [user_id]);
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
     updatePassword,
-    getUserByUsername
+    getUserByUsername,
+    deleteUser
 }

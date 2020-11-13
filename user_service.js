@@ -34,9 +34,15 @@ async function updatePassword(reqBody, callback) {
     callback({ success: true, msg: "Updated!!" });
 }
 
+async function deleteUser(reqBody, callback) {
+    await dao.deleteUser(reqBody.user_id);
+    callback({ success: true, msg: "Deleted!!" });
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
-    updatePassword
+    updatePassword,
+    deleteUser
 }
