@@ -11,27 +11,27 @@ async function insertUser(reqBody, callback) {
     let hash = await bcrypt.hash(reqBody.password, 10);
     reqBody.password = hash;
     await dao.insertUser(reqBody);
-    callback({});
+    callback({ success: true, msg: "User Created!!" });
 }
 
 async function getAllUsers(reqBody, callback) {
     let res = await dao.getAllUsers();
     res = res.rows ? res.rows : [];
-    callback(res);
+    callback({ success: true, data: res });
 }
 
 async function getUserById(reqBody, callback) {
     console.log(reqBody);
     let res = await dao.getUserById(reqBody.user_id);
     res = res.rows ? res.rows : [];
-    callback(res);
+    callback({ success: true, data: res });
 }
 
 async function updatePassword(reqBody, callback) {
     let hash = await bcrypt.hash(reqBody.password, 10);
     reqBody.password = hash;
     await dao.updatePassword(reqBody);
-    callback({});
+    callback({ success: true, msg: "Updated!!" });
 }
 
 module.exports = {
