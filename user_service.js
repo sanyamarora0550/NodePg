@@ -2,6 +2,12 @@ const dao = require('./user_dao'),
     bcrypt = require('bcrypt');
 
 async function insertUser(reqBody, callback) {
+    let isDuplicate = await dao.getUserByUsername(reqBody.user_name);
+    isDuplicate = isDuplicate.rows ? isDuplicate.rows : [];
+    if (isDuplicate.length > 0) {
+        callback({ success: false, msg: "username already exists!!" });
+        return;
+    }
     let hash = await bcrypt.hash(reqBody.password, 10);
     reqBody.password = hash;
     await dao.insertUser(reqBody);

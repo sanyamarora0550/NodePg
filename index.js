@@ -46,7 +46,7 @@ app.put('/update-password/:user_id', async (req, res) => {
         });
     } catch (err) {
         res.send({ succes: false });
-        console.error('Error in /get-user/:id', err);
+        console.error('Error in /update-password/:user_id', err);
     }
 })
 

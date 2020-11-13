@@ -20,9 +20,15 @@ let updatePassword = (data) => {
     return db.query(query, [data.user_id, data.password]);
 }
 
+let getUserByUsername = (user_name) => {
+    let query = 'SELECT * FROM public.user where user_name = $1 AND is_active = true';
+    return db.query(query, [user_name]);
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
-    updatePassword
+    updatePassword,
+    getUserByUsername
 }
