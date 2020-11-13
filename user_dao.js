@@ -1,8 +1,8 @@
 const { db } = require('./db/db');
 
 let insertUser = (data) => {
-    let query = 'INSERT into public.user (user_name,gender,age ) VALUES ($1,$2,$3) ';
-    return db.query(query, [data.user_name, data.gender, data.age]);
+    let query = 'INSERT into public.user (user_name,gender,age,password ) VALUES ($1,$2,$3,$4) ';
+    return db.query(query, [data.user_name, data.gender, data.age, data.password]);
 }
 
 let getAllUsers = () => {
@@ -15,8 +15,14 @@ let getUserById = (user_id) => {
     return db.query(query, [user_id]);
 }
 
+let updatePassword = (data) => {
+    let query = 'UPDATE public.user SET password = $2 WHERE user_id = $1';
+    return db.query(query, [data.user_id, data.password]);
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    updatePassword
 }

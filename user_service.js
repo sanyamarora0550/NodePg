@@ -1,6 +1,9 @@
-const dao = require('./user_dao');
+const dao = require('./user_dao'),
+    bcrypt = require('bcrypt');
 
 async function insertUser(reqBody, callback) {
+    let hash = await bcrypt.hash(reqBody.password, 10);
+    reqBody.password = hash;
     await dao.insertUser(reqBody);
     callback({});
 }
@@ -18,8 +21,16 @@ async function getUserById(reqBody, callback) {
     callback(res);
 }
 
+async function updatePassword(reqBody, callback) {
+    let hash = await bcrypt.hash(reqBody.password, 10);
+    reqBody.password = hash;
+    await dao.updatePassword(reqBody);
+    callback({});
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    updatePassword
 }

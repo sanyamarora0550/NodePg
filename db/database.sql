@@ -9,3 +9,5 @@ ALTER TABLE public.user
 ADD COLUMN is_active boolean DEFAULT 'true' NOT NULL;
 ALTER TABLE public.user
 ADD COLUMN date_created timestamp with time zone DEFAULT now() NOT NULL;
+ALTER TABLE public.user
+ADD COLUMN password VARCHAR(400) DEFAULT '' NOT NULL;
