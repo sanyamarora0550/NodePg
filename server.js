@@ -15,6 +15,6 @@ app.use(express.json()); // req.body
 app.use('/api/v1', allRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Server Started On....!!');
 });

@@ -18,7 +18,7 @@ async function signAccessToken(user_name) {
 
 async function verifyToken(req, res, next) {
     if (!req.headers.token) {
-        res.send(401);
+        res.sendStatus(401);
         return next(new Error("Unauthorised"));
     }
     const token = req.headers.token;
