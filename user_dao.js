@@ -6,12 +6,12 @@ let insertUser = (data) => {
 }
 
 let getAllUsers = () => {
-    let query = 'SELECT * FROM public.user '
+    let query = 'SELECT * FROM public.user WHERE is_active = true '
     return db.query(query, []);
 }
 
 let getUserById = (user_id) => {
-    let query = 'SELECT * FROM public.user WHERE user_id = $1'
+    let query = 'SELECT * FROM public.user WHERE user_id = $1 AND is_active = true'
     return db.query(query, [user_id]);
 }
 
