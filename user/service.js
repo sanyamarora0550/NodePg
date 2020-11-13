@@ -1,4 +1,4 @@
-const dao = require('./user_dao'),
+const dao = require('./dao'),
     bcrypt = require('bcrypt');
 
 async function insertUser(reqBody, callback) {

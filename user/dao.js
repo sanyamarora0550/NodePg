@@ -1,4 +1,4 @@
-const { db } = require('./db/db');
+const { db } = require('../db/db');
 
 let insertUser = (data) => {
     let query = 'INSERT into public.user (user_name,gender,age,password ) VALUES ($1,$2,$3,$4) ';
