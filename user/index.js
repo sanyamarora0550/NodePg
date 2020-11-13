@@ -70,12 +70,30 @@ router.delete('/delete-user/:user_id', verifyToken, async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        service.login(req.body, (data) => {
-            res.send(data);
+        service.login(req.body, async (data) => {
+            if (data.success) {
+                let token = await signAccessToken(req.body.user_name);
+                res.send({ token });
+            }
+            else {
+                res.send(data);
+            }
         });
     } catch (err) {
         res.send({ succes: false });
         console.error('Error in /login', err);
+    }
+});
+
+router.post('/create-task/:user_id', verifyToken, async (req, res) => {
+    try {
+        req.body.user_id = req.params.user_id;
+        service.createTask(req.body, (data) => {
+            res.send(data);
+        })
+    } catch (err) {
+        res.send({ succes: false });
+        console.error('Error in /create-task/:user_id', err);
     }
 });
 

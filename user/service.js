@@ -59,11 +59,17 @@ async function login(reqBody, callback) {
     callback({ success: false, msg: "Invalid username or password!!" });
 }
 
+async function createTask(reqBody, callback) {
+    await dao.createTask(reqBody.user_id, reqBody.task_details);
+    callback({ success: true, msg: "Created Task!!" });
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
     updatePassword,
     deleteUser,
-    login
+    login,
+    createTask
 }

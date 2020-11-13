@@ -30,11 +30,17 @@ let deleteUser = (user_id) => {
     return db.query(query, [user_id]);
 }
 
+let createTask = (user_id, task_details) => {
+    let query = 'INSERT INTO public.user_task (user_id,task_details) VALUES ($1,$2)';
+    return db.query(query, [user_id, task_details]);
+}
+
 module.exports = {
     insertUser,
     getAllUsers,
     getUserById,
     updatePassword,
     getUserByUsername,
-    deleteUser
+    deleteUser,
+    createTask
 }
